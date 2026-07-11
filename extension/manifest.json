@@ -44,7 +44,12 @@
 
   "browser_specific_settings": {
     "gecko": {
-      "id": "website-color-coding@paans.net"
+      "id": "website-color-coding@paans.net",
+      "data_collection_permissions": {
+        "required": [
+          "none"
+        ]
+      }
     }
   }
 }
