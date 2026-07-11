@@ -9,6 +9,10 @@
   },
 
   "background": {
+    "scripts": [
+      "service-worker.js"
+    ],
+    "persistent": false,
     "service_worker": "service-worker.js"
   },
 
@@ -36,5 +40,11 @@
 
   "permissions": [
     "storage"
-  ]
+  ],
+
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "website-color-coding@paans.net"
+    }
+  }
 }
