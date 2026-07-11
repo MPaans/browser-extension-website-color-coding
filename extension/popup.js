@@ -33,7 +33,9 @@ function addSite(event) {
     browserApi.storage.local.get('hostname', function(data){
         var hostname = data['hostname'];
         clearSites(hostname);
-        config.sites[env].push(hostname);
+        if (env !== 'default') {
+            config.sites[env].push(hostname);
+        }
         browserApi.storage.sync.set({config: config}, function() {
             refreshMain();
         });
@@ -43,6 +45,11 @@ function addSite(event) {
 function buildOptions(data) {
     var hostname = data.hostname;
     var select = document.getElementById('addsiteto');
+
+    var optionDefault = document.createElement('option');
+    optionDefault.value = 'default';
+    optionDefault.innerText = '<default>';
+    select.appendChild(optionDefault);
 
     var optionNone = document.createElement('option');
     optionNone.value = 'none';
