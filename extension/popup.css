@@ -8,6 +8,11 @@ body > div {
   position: relative;
 }
 
+div > h4 {
+  padding: 0;
+  margin: 0;
+}
+
 body > div > input {
   vertical-align: middle;
   position: relative;
