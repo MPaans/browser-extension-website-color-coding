@@ -10,8 +10,10 @@ chrome.storage.sync.get('config', function(data) {
     initInputs();
 });
 
-window.addEventListener('focus', function () {
-    window.document.location.reload();
+document.addEventListener('visibilitychange', function () {
+    if (!document.hidden) {
+        window.document.location.reload();
+    }
 });
 
 function initInputs() {
