@@ -13,3 +13,16 @@ browserApi.runtime.onInstalled.addListener(() => {
     });
 });
 
+
+function ensureConfig() {
+    browserApi.storage.sync.get("config", ({ config }) => {
+        if (!config) {
+            chrome.storage.sync.set({
+                config: shared()
+            });
+        }
+    });
+}
+
+browserApi.runtime.onInstalled.addListener(ensureConfig);
+ensureConfig();
