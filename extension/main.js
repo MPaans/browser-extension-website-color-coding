@@ -1,4 +1,6 @@
-chrome.runtime.onMessage.addListener(function(msg, sender) {
+const browserApi = globalThis.browser || globalThis.chrome;
+
+browserApi.runtime.onMessage.addListener(function(msg, sender) {
     switch (msg.action) {
         case 'refresh':
             initPage();
@@ -12,8 +14,8 @@ window.addEventListener('focus', initPage);
 
 function initPage() {
     // Easiest way of sharing hostname with popup.js
-    chrome.storage.local.set({hostname: document.location.hostname});
-    chrome.storage.sync.get('config', function(data) {
+    browserApi.storage.local.set({hostname: document.location.hostname});
+    browserApi.storage.sync.get('config', function(data) {
         config = data['config'];
         removeElements();
         runScript();

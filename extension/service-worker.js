@@ -1,13 +1,13 @@
-importScripts("shared.js");
+const browserApi = globalThis.browser || globalThis.chrome;
 
-chrome.runtime.onInstalled.addListener(() => {
-    chrome.storage.sync.get("config", (data) => {
+browserApi.runtime.onInstalled.addListener(() => {
+    browserApi.storage.sync.get("config", (data) => {
         if (data.config) {
             return;
         }
 
         console.log('Site color coding extension config not set, loading default config');
-        chrome.storage.sync.set({
+        browserApi.storage.sync.set({
             config: shared()
         });
     });

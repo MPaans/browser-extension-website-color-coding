@@ -1,4 +1,6 @@
-chrome.storage.sync.get('config', function(data) {
+const browserApi = globalThis.browser || globalThis.chrome;
+
+browserApi.storage.sync.get('config', function(data) {
     config = data['config'];
 
     var envSelect = document.getElementById('addsiteto');
@@ -13,7 +15,7 @@ chrome.storage.sync.get('config', function(data) {
     domainChangeOption.addEventListener('click', setWarningOption);
     optionsButton.addEventListener('click', openOptionsPage);
 
-    chrome.storage.local.get('hostname', buildOptions);
+    browserApi.storage.local.get('hostname', buildOptions);
 
     if (config.showColorBar) {
         colorbarOption.setAttribute('checked', true);
@@ -28,11 +30,11 @@ chrome.storage.sync.get('config', function(data) {
 
 function addSite(event) {
     var env = event.srcElement.value;
-    chrome.storage.local.get('hostname', function(data){
+    browserApi.storage.local.get('hostname', function(data){
         var hostname = data['hostname'];
         clearSites(hostname);
         config.sites[env].push(hostname);
-        chrome.storage.sync.set({config: config}, function() {
+        browserApi.storage.sync.set({config: config}, function() {
             refreshMain();
         });
     });
@@ -94,33 +96,33 @@ function clearSites(hostname) {
 
 function setColorBarOption(event) {
     config.showColorBar = event.srcElement.checked;
-    chrome.storage.sync.set({config: config}, function() {
+    browserApi.storage.sync.set({config: config}, function() {
         refreshMain();
     });
 }
 
 function setMessageOption(event) {
     config.showMessage = event.srcElement.checked;
-    chrome.storage.sync.set({config: config}, function() {
+    browserApi.storage.sync.set({config: config}, function() {
         refreshMain();
     });
 }
 
 function setWarningOption(event) {
     config.domainChangeWarning = event.srcElement.checked;
-    chrome.storage.sync.set({config: config}, function() {
+    browserApi.storage.sync.set({config: config}, function() {
         refreshMain();
     });
 }
 
 function refreshMain() {
-    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-        chrome.tabs.sendMessage(tabs[0].id, {action: 'refresh'});
+    browserApi.tabs.query({active: true, currentWindow: true}, function(tabs) {
+        browserApi.tabs.sendMessage(tabs[0].id, {action: 'refresh'});
     });
 }
 
 function openOptionsPage() {
-    chrome.tabs.create({
-        'url': 'chrome-extension://' + chrome.runtime.id + '/options.html'
+    browserApi.tabs.create({
+        'url': 'chrome-extension://' + browserApi.runtime.id + '/options.html'
     });
 }

@@ -1,4 +1,6 @@
-chrome.storage.sync.get('config', function(data) {
+const browserApi = globalThis.browser || globalThis.chrome;
+
+browserApi.storage.sync.get('config', function(data) {
     config = data.config;
 
     eventKeyup = document.createEvent('HTMLEvents');
@@ -194,7 +196,7 @@ function createColorSetting() {
     };
     config.colorOrder.push(key);
     config.sites[key] = [];
-    chrome.storage.sync.set({config: config});
+    browserApi.storage.sync.set({config: config});
     window.location.reload();
 }
 
@@ -206,7 +208,7 @@ function deleteColorSetting(event) {
     delete config.colorSettings[key];
     delete config.sites[key];
     config.colorOrder.splice(index, 1);
-    chrome.storage.sync.set({config: config});
+    browserApi.storage.sync.set({config: config});
     window.location.reload();
 }
 
@@ -215,7 +217,7 @@ function deleteSite() {
     var site = this.parentElement.parentElement.getElementsByClassName('col-site').item(0).innerText;
     var index = config.sites[environment].indexOf(site);
     config.sites[environment].splice(index, 1);
-    chrome.storage.sync.set({config: config});
+    browserApi.storage.sync.set({config: config});
     window.location.reload();
 }
 
@@ -226,7 +228,7 @@ function colorOrderMoveUp() {
 
     config.colorOrder.splice(index, 1);
     config.colorOrder.splice(index - 1, 0, key);
-    chrome.storage.sync.set({config: config});
+    browserApi.storage.sync.set({config: config});
     window.location.reload();
 }
 
@@ -244,7 +246,7 @@ function getColorSettingKey(element) {
 function configReset() {
     if (confirm('Are you sure?')) {
         config = shared();
-        chrome.storage.sync.set({config: config});
+        browserApi.storage.sync.set({config: config});
         window.location.reload();
     }
 }
@@ -340,6 +342,6 @@ function configSave(event) {
         config.colorSettings[key].siteMatches = siteMatchesArray;
     }
 
-    chrome.storage.sync.set({config: config});
+    browserApi.storage.sync.set({config: config});
     rawConfigUpdate();
 }
