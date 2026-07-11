@@ -123,6 +123,6 @@ function refreshMain() {
 
 function openOptionsPage() {
     browserApi.tabs.create({
-        'url': 'chrome-extension://' + browserApi.runtime.id + '/options.html'
+        'url': browserApi.runtime.getURL("options.html")
     });
 }
