@@ -1,5 +1,9 @@
 const browserApi = globalThis.browser || globalThis.chrome;
 
+if( 'function' === typeof importScripts) {
+    importScripts('shared.js');
+}
+
 browserApi.runtime.onInstalled.addListener(() => {
     browserApi.storage.sync.get("config", (data) => {
         if (data.config) {
