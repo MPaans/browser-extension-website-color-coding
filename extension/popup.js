@@ -45,18 +45,24 @@ function addSite(event) {
 function buildOptions(data) {
     var hostname = data.hostname;
     var select = document.getElementById('addsiteto');
+    var optionSelected = false;
 
     var optionDefault = document.createElement('option');
     optionDefault.value = 'default';
-    optionDefault.innerText = '<default>';
+    optionDefault.innerText = 'Default (regex matching)';
     select.appendChild(optionDefault);
 
     var optionNone = document.createElement('option');
     optionNone.value = 'none';
     optionNone.innerText = '<none>';
     select.appendChild(optionNone);
+    if (optionSelected === false) {
+        if (config.sites['none'].indexOf(hostname) !== -1) {
+            optionNone.selected = true;
+            optionSelected = true;
+        }
+    }
 
-    var optionSelected = false;
     for (var index in config.colorOrder) {
         var env = config.colorOrder[index];
         var sites = config.sites[env];
@@ -71,16 +77,6 @@ function buildOptions(data) {
             if (sites.indexOf(hostname) !== -1) {
                 option.selected = true;
                 optionSelected = true;
-            }
-        }
-
-        if (optionSelected === false) {
-            for (var index2 in colorSettings.siteMatches) {
-                var siteMatch = colorSettings.siteMatches[index2];
-                if (hostname.match(siteMatchRegExp(siteMatch)) !== null) {
-                    option.selected = true;
-                    break;
-                }
             }
         }
 
