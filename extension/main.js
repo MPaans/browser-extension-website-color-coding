@@ -60,7 +60,10 @@ function getEnvironment() {
         if (config.sites[environment].indexOf(hostname) !== -1) {
             return environment;
         }
+    }
 
+    for (var index in config.colorOrder) {
+        var environment = config.colorOrder[index];
         var settings = config.colorSettings[environment];
         for (var index3 in settings.siteMatches) {
             var siteMatch = settings.siteMatches[index3];
