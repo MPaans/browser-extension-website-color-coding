@@ -13,7 +13,8 @@
       "service-worker.js"
     ],
     "persistent": false,
-    "service_worker": "service-worker.js"
+    "service_worker": "service-worker.js",
+    "type": "module"
   },
 
   "content_scripts": [
@@ -23,7 +24,6 @@
         "https://*/*"
       ],
       "js": [
-        "shared.js",
         "main.js"
       ],
       "run_at": "document_end"

@@ -238,3 +238,10 @@ function removeElements() {
         message.remove();
     }
 }
+
+function siteMatchRegExp(siteMatch) {
+    // siteMatch = siteMatch.replace(/\./g, '\\\.');
+    // siteMatch = siteMatch.replace(/\*/g, '[^.]*');
+    return new RegExp(siteMatch, 'i');
+}
+

@@ -1,10 +1,8 @@
+import { shared } from "./shared.js";
+
 const browserApi = globalThis.browser || globalThis.chrome;
 
-if( 'function' === typeof importScripts) {
-    importScripts('shared.js');
-}
-
-browserApi.runtime.onInstalled.addListener(() => {
+function ensureConfig() {
     browserApi.storage.sync.get("config", (data) => {
         if (data.config) {
             return;
@@ -15,18 +13,9 @@ browserApi.runtime.onInstalled.addListener(() => {
             config: shared()
         });
     });
-});
-
-
-function ensureConfig() {
-    browserApi.storage.sync.get("config", ({ config }) => {
-        if (!config) {
-            chrome.storage.sync.set({
-                config: shared()
-            });
-        }
-    });
 }
 
-browserApi.runtime.onInstalled.addListener(ensureConfig);
 ensureConfig();
+
+browserApi.runtime.onInstalled.addListener(ensureConfig);
+
