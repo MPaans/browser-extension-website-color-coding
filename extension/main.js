@@ -146,6 +146,7 @@ function buildMessage(settings) {
     element.style.borderColor = settings.color;
     element.style.borderWidth = '2px';
     element.style.borderStyle = 'solid';
+    element.style.color = '#000000';
     element.style.textAlign = 'center';
     element.style.fontSize = '13px';
     element.style.fontFamily = 'Verdana';
